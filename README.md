@@ -57,11 +57,31 @@ Parte 2: Criar o conteúdo do `app.py`
 Aplicação feita com Flask + Python para testar a pipeline.
 
 Testar aplicação Flask localmente (no WSL).
-1. Criar ambiente virtual	python3 -m venv venv
-2. Ativar ambiente	source venv/bin/activate
-3. Instalar Flask	pip install flask
-4. Registrar dependência	pip freeze > requirements.txt
-5. Rodar a aplicação	python3 app/app.py
-6. Teste no browser	Acessar http://localhost:5000
-7. Versionar a mudança	git add . && git commit -m "Setup ambiente virtual e dependências"
+1. Criar ambiente virtual	
+```bash
+python3 -m venv venv
+```
+2. Ativar ambiente	
+```bash
+source venv/bin/activate
+```
+3. Instalar as dependências do projeto
+```bash
+pip install -r requirements.txt
+```
+4. Instalar Flask	
+```bash
+pip install flask
+```
+5. Registrar dependência	
+```bash
+pip freeze > requirements.txt
+```
+6. Rodar a aplicação
+```bash
+python3 app/app.py
+```
+
+7. Teste no browser	Acessar http://localhost:5000
+
 
