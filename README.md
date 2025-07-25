@@ -54,9 +54,7 @@ devsecops-pipeline-python/
 * Documentação (README.md) 
 
 Parte 2: Criar o conteúdo do `app.py`
-Aplicação feita com Flask + Python para testar a pipeline.
-
-Testar aplicação Flask localmente (no WSL).
+Aplicação feita com Flask + Python para testar a pipeline. Testar aplicação Flask localmente (no WSL).
 1. Criar ambiente virtual	
 ```bash
 python3 -m venv venv
