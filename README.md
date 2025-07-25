@@ -1,11 +1,12 @@
 ### DevSecOps Pipeline com Python 
 
-Este projeto demonstra uma pipeline CI/CD moderna com práticas de **versionamento**, **integração contínua**, **entrega contínua** e **segurança automatizada**, usando:
+Projetos para o meu Portfólio, demonstra uma pipeline CI/CD moderna com práticas de **versionamento**, **integração contínua**, **entrega contínua** e **segurança automatizada**, usando:
 
+- WSL/Ubuntu
 - Python (aplicação base)
 - Docker
 - GitHub Actions
-- Kubernetes
+- Kubernetes (Minikube)
 - ArgoCD
 - AWS (em breve)
 - Ferramentas DevSecOps
