@@ -56,7 +56,7 @@ devsecops-pipeline-python/
 
 Parte 2: Criar o conteúdo do `app.py`
 Aplicação feita com Flask + Python para testar a pipeline. Testar aplicação Flask localmente (no WSL).
-1. Criar ambiente virtual	
+1. Criar ambiente virtual isolado onde se pode instalar pacotes Python sem afetar o sistema inteiro	
 ```bash
 python3 -m venv venv
 ```
@@ -68,11 +68,11 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-4. Instalar Flask	
+4. Instalar Flask.Dentro do venv o Flask será instalado apenas para esse projeto.
 ```bash
 pip install flask
 ```
-5. Registrar dependência	
+5. Registrar dependência para manter o projeto replicável por outras pessoas ou por pipelines automatizadas.	
 ```bash
 pip freeze > requirements.txt
 ```
