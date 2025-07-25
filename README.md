@@ -13,7 +13,6 @@ Este projeto demonstra uma pipeline CI/CD moderna com práticas de **versionamen
 ## Estrutura
 
 ```bash
-.
 ├── .github/workflows/   # Pipeline CI
 ├── app/                 # Aplicação em Python
 ├── k8s/                 # Manifests para Kubernetes
@@ -30,4 +29,39 @@ Este projeto demonstra uma pipeline CI/CD moderna com práticas de **versionamen
 * Implantar boas práticas de DevSecOps
 
 # Etapa 1 – Pipeline DevSecOps Completo
-Objetivo: Demonstrar integração contínua, deploy contínuo e segurança em tempo de build/deploy.
+Objetivo: Demonstrar integração contínua, deploy contínuo e segurança em tempo de build/deploy. 
+
+Parte 1: Parte 1: Criar estrutura do projeto no ambiente local
+
+devsecops-pipeline-python/ 
+├── app/ 
+│   └── app.py 
+├── Dockerfile 
+├── requirements.txt 
+├── .github/ 
+│   └── workflows/ 
+│       └── ci.yml 
+├── k8s/ 
+│   ├── deployment.yaml 
+│   └── service.yaml 
+└── README.md 
+
+* Código fonte (app/app.py) 
+* Arquivo Docker para containerização 
+* Arquivo de dependências Python (requirements.txt) 
+* Estrutura de CI/CD (.github/workflows/ci.yml) 
+* Manifestos para deploy em Kubernetes (k8s/*.yaml) 
+* Documentação (README.md) 
+
+Parte 2: Criar o conteúdo do `app.py`
+Aplicação feita com Flask + Python para testar a pipeline.
+
+Testar aplicação Flask localmente (no WSL).
+1. Criar ambiente virtual	python3 -m venv venv
+2. Ativar ambiente	source venv/bin/activate
+3. Instalar Flask	pip install flask
+4. Registrar dependência	pip freeze > requirements.txt
+5. Rodar a aplicação	python3 app/app.py
+6. Teste no browser	Acessar http://localhost:5000
+7. Versionar a mudança	git add . && git commit -m "Setup ambiente virtual e dependências"
+
