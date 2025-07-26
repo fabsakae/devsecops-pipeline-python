@@ -1,33 +1,46 @@
-# Use uma imagem base Python oficial.
-# python:3.10-slim-buster é uma boa escolha para ambientes de produção,
-# pois é menor que as imagens completas de Python e tem base Debian (buster).
+# FROM: Define a imagem base a partir da qual sua imagem será construída.
+# Usamos 'python:3.10-slim-buster' que é uma imagem oficial do Python,
+# menor ('slim') e baseada no Debian 'buster', ideal para produção
+# por ser mais leve e ter menos superfícies de ataque.
 FROM python:3.10-slim-buster
 
-# Define o diretório de trabalho dentro do contêiner.
-# Todos os comandos subsequentes (COPY, RUN, CMD) serão executados neste diretório.
+# WORKDIR: Define o diretório de trabalho padrão dentro do contêiner.
+# Todos os comandos de shell (RUN, CMD) e cópia (COPY) subsequentes
+# serão executados a partir deste diretório (ou relativos a ele).
 WORKDIR /app
 
-# Copia o arquivo requirements.txt para o diretório de trabalho.
-# Isso permite que o pip instale as dependências antes de copiar todo o código da aplicação,
-# otimizando o cache do Docker (se o requirements.txt não mudar, esta camada não é reconstruída).
+# COPY requirements.txt .: Copia o arquivo 'requirements.txt' do seu
+# sistema local (onde você está rodando o 'docker build') para o
+# diretório de trabalho ('/app') dentro do contêiner.
+# Fazemos isso primeiro para aproveitar o cache do Docker: se suas dependências
+# não mudarem, esta camada não precisa ser reconstruída, acelerando futuras builds.
 COPY requirements.txt .
 
-# Instala as dependências Python especificadas no requirements.txt.
-# O --no-cache-dir é para evitar que o pip armazene pacotes em cache, reduzindo o tamanho final da imagem.
-# O --upgrade pip garante que o pip esteja atualizado.
+# RUN: Executa um comando dentro do contêiner durante o processo de build.
+# pip install --no-cache-dir --upgrade pip: Garante que o pip esteja atualizado
+# e instala as dependências do 'requirements.txt' sem armazenar cache,
+# o que ajuda a manter o tamanho final da imagem menor.
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copia todo o código da sua aplicação (a pasta 'app') para o diretório de trabalho no contêiner.
-# Isso significa que o seu main.py estará em /app/main.py (porque a pasta 'app' do host foi copiada para o WORKDIR /app).
-COPY app/ .
+# COPY app/ .: Copia o conteúdo da pasta 'app/' do seu sistema local
+# para o diretório de trabalho ('/app') dentro do contêiner.
+# Isso significa que seu 'app.py' estará em '/app/app.py' dentro do contêiner.
+COPY app/ app/
 
-# Expõe a porta que a aplicação Flask vai escutar.
+# EXPOSE: Informa ao Docker que o contêiner ouvirá na porta 5000 em tempo de execução.
+# Isso é apenas uma documentação; não publica a porta no host automaticamente.
 EXPOSE 5000
 
-# Define a variável de ambiente FLASK_APP para apontar para o seu arquivo principal.
-ENV FLASK_APP=app.py
+# ENV FLASK_APP=app/app.py: Define uma variável de ambiente dentro do contêiner.
+# O Flask usa a variável FLASK_APP para saber qual arquivo principal ele deve carregar
+# quando você usa o comando 'flask run'. O caminho 'app/app.py' é porque copiamos
+# a pasta 'app' para dentro da pasta '/app' no contêiner.
+ENV FLASK_APP=app/app.py
 
-# Define o comando que será executado quando o contêiner for iniciado.
-# Usa o comando 'flask run' que é mais idiomático.
+# CMD: Define o comando padrão que será executado quando o contêiner for iniciado.
+# Usamos 'flask run' que é o comando idiomático do Flask.
+# --host=0.0.0.0: Faz com que a aplicação Flask seja acessível de qualquer interface de rede
+#                   dentro do contêiner, o que é crucial para acessá-la de fora.
+# --port=5000: Define a porta na qual o Flask irá escutar.
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
