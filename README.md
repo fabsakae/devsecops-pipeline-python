@@ -32,7 +32,7 @@ Projetos para o meu Portfólio, demonstra uma pipeline CI/CD moderna com prátic
 # Etapa 1 – Pipeline DevSecOps Completo
 Objetivo: Demonstrar integração contínua, deploy contínuo e segurança em tempo de build/deploy. 
 
-Parte 1: Parte 1: Criar estrutura do projeto no ambiente local
+Parte 1: Criar estrutura do projeto no ambiente local
 
 devsecops-pipeline-python/ 
 ├── app/ 
