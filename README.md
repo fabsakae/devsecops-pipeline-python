@@ -80,7 +80,54 @@ pip freeze > requirements.txt
 ```bash
 python3 app/app.py
 ```
+---
 
-7. Teste no browser	Acessar http://localhost:5000
+# ETAPA 2 - Dockerização e Imagem Container
 
+Objetivo desta Etapa:
+
+Criar o Dockerfile para a sua aplicação Flask.
+
+Construir a imagem Docker da sua aplicação localmente.
+
+Testar se a aplicação roda corretamente dentro do contêiner Docker.
+
+Passo 2.1 Dockerfile: Dentro da pasta raiz do seu projeto devsecops-pipeline-python/
+```
+
+FROM python:3.10-slim-buster
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY app/ app/
+
+EXPOSE 5000
+
+ENV FLASK_APP=app/app.py
+
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+```
+Passo 2.2: Construir a Imagem Docker Localmente
+Dentro do diretório raiz do seu projeto devsecops-pipeline-python/
+```
+cd ~/devsecops-pipeline-python
+```
+Execute o comando de build:
+```
+docker build -t devsecops-pipeline-app:latest 
+```
+Passo 2.3: Testar a Aplicação Rodando em Contêiner
+```
+docker run -p 5000:5000 devsecops-pipeline-app:latest
+```
+![D:\devsecops-pipeline-python](dockerrun.png)
+
+Teste no browser	Acessar http://localhost:5000
+
+![D:\devsecops-pipeline-python](pagina.png)
 
