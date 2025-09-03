@@ -131,3 +131,23 @@ Teste no browser	Acessar http://localhost:5000
 
 ![D:\devsecops-pipeline-python](pagina.png)
 
+# Etapa 3 - Integração Contínua (CI) com GitHub Actions
+
+Objetivo desta Etapa:
+
+Automatizar o processo de construção da sua imagem Docker.
+
+Adicionar um scan de segurança de imagem (com Trivy) na sua pipeline de CI.
+
+Publicar a imagem construída e escaneada no Docker Hub de forma automática.
+
+Tudo isso será acionado automaticamente a cada vez que você enviar código para o GitHub.
+Passo 3.1: Configurar Segredos no GitHub (Para Acesso Seguro ao Docker Hub)
+
+Gerar um Token de Acesso no Docker Hub
+![D:\devsecops-pipeline-python](githubtoken.png)
+
+Adicionar os Segredos no seu Repositório GitHub: 
+![D:\devsecops-pipeline-python](secret.png)
+
+Passo 3.2: Criar o Arquivo de Workflow (ci.yml)
