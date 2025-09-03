@@ -45,20 +45,17 @@ jobs: # Definição dos trabalhos (jobs) que compõem este workflow. Um workflow
                                                                             # Formato: seu_usuario_docker/nome_da_imagem:latest
                                                                             # Ex: fabiola_sakae/devsecops-pipeline-app:latest
 
-      - name: Download Trivy # Passo 5: Baixa e prepara a ferramenta Trivy na máquina virtual do GitHub Actions.
-                            # Trivy é um scanner de vulnerabilidades de imagens de contêiner.
-        uses: aquasecurity/trivy-action/setup@v0 # Action para configurar o Trivy.
+      - name: Download Trivy # Este passo baixa e prepara o Trivy na máquina virtual.
+        uses: aquasecurity/trivy-action/setup@v0
         with:
-          version: '0.51.0' # Especifica uma versão específica do Trivy a ser baixada e usada.
+          version: '0.51.0' # Especifica uma versão específica do Trivy para o setup.
 
-      - name: Scan Docker image with Trivy # Passo 6: Executa o scan de segurança na imagem Docker com Trivy.
-        uses: aquasecurity/trivy-action@master # Action para rodar o scan do Trivy.
-        with: # Parâmetros para o scan do Trivy.
-          image-ref: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest # A imagem que será escaneada.
-          format: 'table' # Define o formato de saída dos resultados no log do GitHub Actions (tabela, fácil de ler).
-          exit-code: '1' # **CRUCIAL PARA DEVSECOPS!** Se o Trivy encontrar vulnerabilidades com a 'severity' especificada,
-                        # este passo falhará (código de saída 1). Isso é bom, pois impede que imagens vulneráveis
-                        # avancem na pipeline.
+      - name: Scan Docker image with Trivy # Agora o Trivy já está pronto para escanear.
+        uses: aquasecurity/trivy-action@master # Usamos a tag `master` para a versão mais recente e estável do scanner.
+        with:
+          image-ref: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+          format: 'table'
+          exit-code: '1'
           severity: 'CRITICAL,HIGH' # Define quais níveis de severidade de vulnerabilidade farão o passo falhar.
                                     # (Crítica e Alta). Você pode ajustar isso conforme sua política de segurança.
           # ignore-unfixed: true # Opcional: Ignora vulnerabilidades que ainda não têm correção (patches) disponível.
